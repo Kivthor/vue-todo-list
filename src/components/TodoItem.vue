@@ -56,7 +56,7 @@ const editTask = () => {
 </template>
 
 <style scoped>
-div.todo-item-container {
+.todo-item-container {
   min-width: 17rem;
   max-width: 18rem;
   max-height: 20rem;
@@ -71,13 +71,13 @@ div.todo-item-container {
   border: var(--border-container);
 }
 
-div.todo-item-top {
+.todo-item-top {
   display: flex;
   gap: .5rem;
   border: var(--border-container);
 }
 
-input.todo-item-name-input {
+.todo-item-name-input {
   display: block;
   flex: 1;
   margin: 0;
@@ -94,7 +94,7 @@ input.todo-item-name-input {
   color-scheme: dark;
 }
 
-h2.todo-item-name {
+.todo-item-name {
   display: flex;
   align-items: center;
   flex: 1;
@@ -134,12 +134,12 @@ button:active {
   color: var(--main-color-darker);
 }
 
-div.todo-item-body {
+.todo-item-body {
   display: flex;
   border: var(--border-container);
 }
 
-textarea.todo-item-text-input {
+.todo-item-text-input {
   display: block;
   width: 100%;
   padding: 0;
@@ -153,7 +153,7 @@ textarea.todo-item-text-input {
   border: var(--border-sub-container);
 }
 
-p.todo-item-text {
+.todo-item-text {
   word-break: break-all;
   white-space: pre-wrap;
   font-size: 1rem;
@@ -164,7 +164,7 @@ p.todo-item-text {
   border: var(--border-sub-container);
 }
 
-div.todo-item-footer {
+.todo-item-footer {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -172,7 +172,7 @@ div.todo-item-footer {
   border: var(--border-container);
 }
 
-input.todo-item-date-input {
+.todo-item-date-input {
   padding: 0 .5rem;
   text-transform: uppercase;
   font-family: monospace;
@@ -184,17 +184,17 @@ input.todo-item-date-input {
   transition: .2s;
 }
 
-input.todo-item-date-input:hover {
+.todo-item-date-input:hover {
   background-color: var(--main-color-darker);
   border-color: var(--main-color-darker);
 }
 
-input.todo-item-date-input:active {
+.todo-item-date-input:active {
   background-color: var(--main-color-very-light);
   border-color: var(--main-color-very-light);
 }
 
-div.todo-item-date {
+.todo-item-date {
   display: flex;
   align-items: center;
   background-color: inherit;
@@ -203,7 +203,7 @@ div.todo-item-date {
   transition: .2s;
 }
 
-div.modColor {
+.modColor {
   background-color: var(--main-color-mod);
   color: var(--main-color-text-mod);
   box-shadow: var(--main-shadow-mod);

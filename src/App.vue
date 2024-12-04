@@ -30,7 +30,7 @@ const changeColor = () => {
 </template>
 
 <style scoped>
-div.main-containter {
+.main-containter {
   width: 100vw;
   min-width: 17rem;
   display: flex;
@@ -38,7 +38,7 @@ div.main-containter {
   border: var(--border-main-container);
 }
 
-div.todo-items-container {
+.todo-items-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -48,7 +48,7 @@ div.todo-items-container {
   border: var(--border-container);
 }
 
-div.title-bar-container {
+.title-bar-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -66,7 +66,7 @@ h1 {
   border: var(--border-sub-container);
 }
 
-div.title-bar-buttons {
+.title-bar-buttons {
   display: flex;
   gap: 1rem;
   border: var(--border-sub-container);
