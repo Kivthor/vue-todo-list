@@ -192,7 +192,7 @@ button:active {
   display: flex;
   align-items: center;
   background-color: inherit;
-  color: inherit;
+  color: var(--main-color-very-light-mod);
   border: var(--border-button);
   transition: .2s;
 }
