@@ -73,6 +73,8 @@ const editTask = () => {
 
 .todo-item-top {
   display: flex;
+  min-height: 1.7rem;
+  align-items: center;
   gap: .5rem;
   border: var(--border-container);
 }
@@ -166,6 +168,7 @@ button:active {
 
 .todo-item-footer {
   display: flex;
+  min-height: 1.7rem;
   flex-flow: row nowrap;
   justify-content: space-between;
   gap: .5rem;
@@ -173,7 +176,7 @@ button:active {
 }
 
 .todo-item-date-input {
-  padding: 0 .5rem;
+  padding: 0rem .5rem;
   text-transform: uppercase;
   font-family: monospace;
   background-color: var(--main-color-lighter);
