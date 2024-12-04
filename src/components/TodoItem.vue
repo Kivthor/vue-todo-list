@@ -207,5 +207,22 @@ div.modColor {
   background-color: var(--main-color-mod);
   color: var(--main-color-text-mod);
   box-shadow: var(--main-shadow-mod);
+
+  button {
+    background-color: var(--main-color-lighter-mod);
+    color: var(--main-color-text-mod);
+  }
+
+  button:hover {
+    background-color: var(--main-color-darker-mod);
+    border-color: var(--main-color-darker-mod);
+  }
+
+  button:active {
+    background-color: var(--main-color-very-light-mod);
+    border-color: var(--main-color-very-light-mod);
+    color: var(--main-color-darker-mod);
+  }
+
 }
 </style>
