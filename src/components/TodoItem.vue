@@ -10,25 +10,16 @@ const taskName = ref()
 const taskText = ref()
 const taskDate = ref()
 
-
 const isNotDeleted = ref(true)
-const isNotSaved = ref(true)
-const isNotEdited = ref(false)
+const isEdited = ref(true)
 const isColorModified = ref(false)
 
 const deleteTask = () => {
-  isNotDeleted.value = false
+  isNotDeleted.value = !isNotDeleted.value
 }
 
-const saveTask = () => {
-  isNotSaved.value = false
-  isNotEdited.value = true
-  isColorModified.value = !isColorModified.value
-}
-
-const editTask = () => {
-  isNotEdited.value = false
-  isNotSaved.value = true
+const modTask = () => {
+  isEdited.value = !isEdited.value
   isColorModified.value = !isColorModified.value
 }
 </script>
@@ -37,20 +28,20 @@ const editTask = () => {
   <div class="todo-item-container" v-if="isNotDeleted" :class="{ modColor: isColorModified }">
     <div class="todo-item-top">
       <input type="text" name="taskTitle" class="todo-item-name-input" placeholder="Name..." maxlength="20"
-        v-if="isNotSaved" v-model="taskName">
-      <h2 class="todo-item-name" v-if="isNotEdited">{{ taskName }}</h2>
+        v-if="isEdited" v-model="taskName">
+      <h2 class="todo-item-name" v-else>{{ taskName }}</h2>
       <TodoItemDeleteButton @delete-task="deleteTask" />
     </div>
     <div class="todo-item-body">
       <textarea name="taskText" class="todo-item-text-input" placeholder="description..." rows="10" col="50"
-        maxlength="200" v-if="isNotSaved" v-model="taskText"></textarea>
-      <p class="todo-item-text" v-if="isNotEdited">{{ taskText }}</p>
+        maxlength="200" v-if="isEdited" v-model="taskText"></textarea>
+      <p class="todo-item-text" v-else>{{ taskText }}</p>
     </div>
     <div class="todo-item-footer">
-      <input type="date" name="taskDate" class="todo-item-date-input" v-if="isNotSaved" v-model="taskDate">
-      <div class="todo-item-date" v-if="isNotEdited">{{ taskDate }}</div>
-      <TodoItemEditButton v-if="isNotEdited" @edit-task="editTask" />
-      <TodoItemSaveButton v-if="isNotSaved && taskText" @save-task="saveTask" />
+      <input type="date" name="taskDate" class="todo-item-date-input" v-if="isEdited" v-model="taskDate">
+      <div class="todo-item-date" v-else>{{ taskDate }}</div>
+      <TodoItemEditButton v-if="isColorModified" @mod-task="modTask" />
+      <TodoItemSaveButton v-if="isEdited && taskText" @mod-task="modTask" />
     </div>
   </div>
 </template>
