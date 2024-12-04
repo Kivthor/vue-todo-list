@@ -154,7 +154,6 @@ textarea.todo-item-text-input {
 }
 
 p.todo-item-text {
-  /* overflow: hidden; */
   word-break: break-all;
   white-space: pre-wrap;
   font-size: 1rem;
