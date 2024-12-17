@@ -50,3 +50,31 @@ input:focus {
   opacity: 0.5;
   font-family: "Courier New", Courier, monospace;
 }
+
+button,
+.button {
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  background-color: var(--main-color-text);
+  color: var(--main-color-darker);
+  border: var(--border-button);
+  border-radius: var(--main-radius);
+  box-shadow: var(--main-shadow);
+  padding: 0.5rem 1rem;
+  transition: 0.3s;
+  text-transform: lowercase;
+}
+
+button:hover,
+.button:hover {
+  background-color: var(--main-color);
+  color: var(--main-color-text);
+}
+
+button:active,
+.button:active {
+  background-color: var(--main-color-text);
+  color: var(--main-color-darker);
+}

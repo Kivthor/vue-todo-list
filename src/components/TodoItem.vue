@@ -1,36 +1,38 @@
 <script setup>
-import TodoItemDeleteButton from './TodoItemDeleteButton.vue';
-import TodoItemEditButton from './TodoItemEditButton.vue';
+import TodoItemDeleteButton from "./TodoItemDeleteButton.vue";
+import TodoItemEditButton from "./TodoItemEditButton.vue";
 
-import TodoItemSaveButton from './TodoItemSaveButton.vue';
+import TodoItemSaveButton from "./TodoItemSaveButton.vue";
+import UiButton from "./UiButton.vue";
+import UiInput from "./UiInput.vue";
 
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const taskName = ref()
-const taskText = ref()
-const taskDate = ref()
+const taskName = ref();
+const taskText = ref();
+const taskDate = ref();
 
-const isNotDeleted = ref(true)
-const isEdited = ref(true)
-const isColorModified = ref(false)
+const isNotDeleted = ref(true);
+const isEdited = ref(true);
+const isColorModified = ref(false);
 
 const deleteTask = () => {
-  isNotDeleted.value = !isNotDeleted.value
-}
+  isNotDeleted.value = !isNotDeleted.value;
+};
 
 const modTask = () => {
-  isEdited.value = !isEdited.value
-  isColorModified.value = !isColorModified.value
-}
+  isEdited.value = !isEdited.value;
+  isColorModified.value = !isColorModified.value;
+};
 </script>
 
 <template>
   <div class="todo-item-container" v-if="isNotDeleted" :class="{ modColor: isColorModified }">
     <div class="todo-item-top">
-      <input type="text" name="taskTitle" class="todo-item-name-input" placeholder="Name..." maxlength="20"
-        v-if="isEdited" v-model="taskName">
+      <UiInput type="text" name="taskTitle" class="todo-item-name-input" placeholder="Name..." :maxlength="20"
+        v-if="isEdited" :model-value="taskName" @update:model-value="taskName = $event" />
       <h2 class="todo-item-name" v-else>{{ taskName }}</h2>
-      <TodoItemDeleteButton @delete-task="deleteTask" />
+      <UiButton @action="deleteTask" buttonType="DELETE">x</UiButton>
     </div>
     <div class="todo-item-body">
       <textarea name="taskText" class="todo-item-text-input" placeholder="description..." rows="10" col="50"
@@ -38,7 +40,7 @@ const modTask = () => {
       <p class="todo-item-text" v-else>{{ taskText }}</p>
     </div>
     <div class="todo-item-footer">
-      <input type="date" name="taskDate" class="todo-item-date-input" v-if="isEdited" v-model="taskDate">
+      <input type="date" name="taskDate" class="todo-item-date-input" v-if="isEdited" v-model="taskDate" />
       <div class="todo-item-date" v-else>{{ taskDate }}</div>
       <TodoItemEditButton v-if="isColorModified" @mod-task="modTask" />
       <TodoItemSaveButton v-if="isEdited && taskText" @mod-task="modTask" />
@@ -54,7 +56,7 @@ const modTask = () => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: .5rem;
+  gap: 0.5rem;
   padding: 1rem;
   border-radius: var(--main-radius);
   background-color: var(--main-color);
@@ -66,7 +68,7 @@ const modTask = () => {
   display: flex;
   min-height: 1.7rem;
   align-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
   border: var(--border-container);
 }
 
@@ -76,7 +78,7 @@ const modTask = () => {
   margin: 0;
   padding: 0;
   font-size: 1rem;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   text-transform: capitalize;
   font-weight: bold;
   letter-spacing: normal;
@@ -94,7 +96,7 @@ const modTask = () => {
   margin: 0;
   padding: 0;
   font-size: 1rem;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   text-transform: capitalize;
   font-weight: bold;
   letter-spacing: normal;
@@ -109,11 +111,11 @@ button {
   margin: 0;
   border-radius: var(--main-radius);
   font-size: 1rem;
-  padding: .2rem .5rem;
+  padding: 0.2rem 0.5rem;
   border: var(--border-button);
   background-color: var(--main-color-lighter);
   color: var(--main-color-text);
-  transition: .3s;
+  transition: 0.3s;
 }
 
 button:hover {
@@ -162,12 +164,12 @@ button:active {
   min-height: 1.7rem;
   flex-flow: row nowrap;
   justify-content: space-between;
-  gap: .5rem;
+  gap: 0.5rem;
   border: var(--border-container);
 }
 
 .todo-item-date-input {
-  padding: 0rem .5rem;
+  padding: 0rem 0.5rem;
   text-transform: uppercase;
   font-family: monospace;
   background-color: var(--main-color-lighter);
@@ -175,7 +177,7 @@ button:active {
   color-scheme: dark;
   border: var(--border-button);
   border-radius: var(--main-radius);
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .todo-item-date-input:hover {
@@ -194,7 +196,7 @@ button:active {
   background-color: inherit;
   color: var(--main-color-very-light-mod);
   border: var(--border-button);
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .modColor {
@@ -217,6 +219,5 @@ button:active {
     border-color: var(--main-color-very-light-mod);
     color: var(--main-color-darker-mod);
   }
-
 }
 </style>

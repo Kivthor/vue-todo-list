@@ -19,6 +19,7 @@ const changeColor = () => {
       <h1>Todo List</h1>
       <div class="title-bar-buttons">
         <AddButton @add-task="count++" />
+        <div>{{ count }}</div>
         <ClearButton @clear-tasks="count = 0" />
         <button @click="changeColor">discoteka</button>
       </div>
@@ -70,30 +71,5 @@ h1 {
   display: flex;
   gap: 1rem;
   border: var(--border-sub-container);
-}
-
-button {
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  border: none;
-  background-color: var(--main-color-text);
-  color: var(--main-color-darker);
-  border: var(--border-button);
-  border-radius: var(--main-radius);
-  box-shadow: var(--main-shadow);
-  padding: .5rem 1rem;
-  transition: .3s;
-  text-transform: lowercase;
-}
-
-button:hover {
-  background-color: var(--main-color);
-  color: var(--main-color-text);
-}
-
-button:active {
-  background-color: var(--main-color-text);
-  color: var(--main-color-darker);
 }
 </style>
