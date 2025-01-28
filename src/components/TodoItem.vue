@@ -1,13 +1,12 @@
 <script setup>
 import TodoItemDeleteButton from "./TodoItemDeleteButton.vue";
 import TodoItemEditButton from "./TodoItemEditButton.vue";
-
 import TodoItemSaveButton from "./TodoItemSaveButton.vue";
 import UiButton from "./UiButton.vue";
 import UiInput from "./UiInput.vue";
 
 import { ref } from "vue";
-
+defineProps(["idProp"]);
 const taskName = ref();
 const taskText = ref();
 const taskDate = ref();
@@ -27,20 +26,48 @@ const modTask = () => {
 </script>
 
 <template>
-  <div class="todo-item-container" v-if="isNotDeleted" :class="{ modColor: isColorModified }">
+  <div
+    class="todo-item-container"
+    v-if="isNotDeleted"
+    :class="{ modColor: isColorModified }"
+  >
     <div class="todo-item-top">
-      <UiInput type="text" name="taskTitle" class="todo-item-name-input" placeholder="Name..." :maxlength="20"
-        v-if="isEdited" :model-value="taskName" @update:model-value="taskName = $event" />
+      <UiInput
+        class="todo-item-name-input"
+        type="text"
+        name="taskTitle"
+        placeholder="Name..."
+        :maxlength="20"
+        :model-value="taskName"
+        @update:model-value="taskName = $event"
+        v-if="isEdited"
+      />
       <h2 class="todo-item-name" v-else>{{ taskName }}</h2>
+      <div>{{ idProp }}</div>
       <UiButton @action="deleteTask" buttonType="DELETE">x</UiButton>
     </div>
     <div class="todo-item-body">
-      <textarea name="taskText" class="todo-item-text-input" placeholder="description..." rows="10" col="50"
-        maxlength="200" v-if="isEdited" v-model="taskText"></textarea>
+      <textarea
+        name="taskText"
+        class="todo-item-text-input"
+        placeholder="description..."
+        rows="10"
+        col="50"
+        maxlength="200"
+        v-model="taskText"
+        v-if="isEdited"
+      >
+      </textarea>
       <p class="todo-item-text" v-else>{{ taskText }}</p>
     </div>
     <div class="todo-item-footer">
-      <input type="date" name="taskDate" class="todo-item-date-input" v-if="isEdited" v-model="taskDate" />
+      <input
+        type="date"
+        name="taskDate"
+        class="todo-item-date-input"
+        v-if="isEdited"
+        v-model="taskDate"
+      />
       <div class="todo-item-date" v-else>{{ taskDate }}</div>
       <TodoItemEditButton v-if="isColorModified" @mod-task="modTask" />
       <TodoItemSaveButton v-if="isEdited && taskText" @mod-task="modTask" />

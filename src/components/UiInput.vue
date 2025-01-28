@@ -1,15 +1,22 @@
 <template>
-  <input :type="type" :name="name" class="todo-item-name-input" :placeholder="placeholder" :maxlength="maxlength"
-    :model-value="modelValue" @input="onInput" />
+  <input 
+  class="todo-item-name-input" 
+  :type="type" 
+  :name="name" 
+  :placeholder="placeholder" 
+  :maxlength="maxlength"
+  :model-value="modelValue" 
+  @input="onInput" 
+  />
 </template>
 
 <script setup>
 const props = defineProps({
-  modelValue: String,
   type: String,
   name: String,
   placeholder: String,
   maxlength: Number,
+  modelValue: String,
 });
 
 const emit = defineEmits(["update:model-value"]);

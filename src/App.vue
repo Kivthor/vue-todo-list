@@ -1,16 +1,16 @@
 <script setup>
-import AddButton from './components/AddButton.vue';
-import ClearButton from './components/ClearButton.vue';
-import TodoItem from './components/TodoItem.vue';
+import AddButton from "./components/AddButton.vue";
+import ClearButton from "./components/ClearButton.vue";
+import TodoItem from "./components/TodoItem.vue";
 
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const count = ref(0)
+const count = ref(0);
 
 const changeColor = () => {
-  const root = document.documentElement
-  root.style.setProperty('--hue', Math.floor(Math.random() * 360))
-}
+  const root = document.documentElement;
+  root.style.setProperty("--hue", Math.floor(Math.random() * 360));
+};
 </script>
 
 <template>
@@ -19,13 +19,12 @@ const changeColor = () => {
       <h1>Todo List</h1>
       <div class="title-bar-buttons">
         <AddButton @add-task="count++" />
-        <div>{{ count }}</div>
         <ClearButton @clear-tasks="count = 0" />
         <button @click="changeColor">discoteka</button>
       </div>
     </div>
     <div class="todo-items-container">
-      <TodoItem v-for="index in count" :key="index" />
+      <TodoItem v-for="index in count" :key="index" :id-prop="index" />
     </div>
   </div>
 </template>
