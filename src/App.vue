@@ -1,11 +1,45 @@
 <script setup>
-import AddButton from "./components/AddButton.vue";
-import ClearButton from "./components/ClearButton.vue";
+import UiButton from "@/components/UiButton.vue";
 import TodoItem from "./components/TodoItem.vue";
 
 import { ref } from "vue";
 
 const count = ref(0);
+const taskList = ref([]);
+const addTask = () => {
+  taskList.value.push({
+    id: 'id' + Math.floor(Math.random() * 1000),
+    name: '',
+    text: '',
+    date: '',
+    status: 'WAITING',
+  })
+}
+
+const deleteTask = (taskId) => {
+  taskList.value = taskList.value.filter((task) => task.id !== taskId)
+  console.log(`DELETED TASK WITH ID === ${taskId}`)
+}
+
+const modTask = (
+    taskId,
+    taskName,
+    taskText,
+    taskDate,
+    isSaved
+) => {
+  for (const task of taskList.value) {
+    if (task.id === taskId) {
+      task.name = taskName
+      task.text = taskText
+      task.date = taskDate
+      task.status = isSaved ? 'SAVED' : 'NOT-SAVED'
+    }
+  }
+}
+const clearTaskList = () => {
+  taskList.value = []
+}
 
 const changeColor = () => {
   const root = document.documentElement;
@@ -14,23 +48,26 @@ const changeColor = () => {
 </script>
 
 <template>
-  <div class="main-containter">
+  <div class="main-container">
     <div class="title-bar-container">
       <h1>Todo List</h1>
       <div class="title-bar-buttons">
-        <AddButton @add-task="count++" />
-        <ClearButton @clear-tasks="count = 0" />
-        <button @click="changeColor">discoteka</button>
+        <UiButton button-type="TITLE" @action="addTask">add</UiButton>
+        <UiButton button-type="TITLE" @action="clearTaskList">clear</UiButton>
+        <UiButton button-type="TITLE" @action="changeColor">color</UiButton>
       </div>
     </div>
+    <div>{{ taskList }}</div>
     <div class="todo-items-container">
-      <TodoItem v-for="index in count" :key="index" :id-prop="index" />
+      <TodoItem v-for="task in taskList" :key="task.id" :todo-item="task"
+      @delete-task="deleteTask"
+      @mod-task="modTask"/>
     </div>
   </div>
 </template>
 
 <style scoped>
-.main-containter {
+.main-container {
   width: 100vw;
   min-width: 17rem;
   display: flex;

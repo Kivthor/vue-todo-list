@@ -1,35 +1,35 @@
 <script setup>
-import TodoItemDeleteButton from "./TodoItemDeleteButton.vue";
-import TodoItemEditButton from "./TodoItemEditButton.vue";
-import TodoItemSaveButton from "./TodoItemSaveButton.vue";
 import UiButton from "./UiButton.vue";
 import UiInput from "./UiInput.vue";
-
 import { ref } from "vue";
-defineProps(["idProp"]);
-const taskName = ref();
-const taskText = ref();
-const taskDate = ref();
 
-const isNotDeleted = ref(true);
-const isEdited = ref(true);
-const isColorModified = ref(false);
+const emit = defineEmits(['delete-task', 'mod-task'])
+const props = defineProps({
+  todoItem: Object,
+})
+
+
+const taskId = ref(props.todoItem.id);
+const taskName = ref('');
+const taskText = ref('');
+const taskDate = ref('');
+const isSaved = ref(false);
 
 const deleteTask = () => {
-  isNotDeleted.value = !isNotDeleted.value;
-};
+  emit('delete-task', taskId.value)
+}
 
 const modTask = () => {
-  isEdited.value = !isEdited.value;
-  isColorModified.value = !isColorModified.value;
-};
+  isSaved.value = !isSaved.value
+  emit('mod-task', taskId.value, taskName.value, taskText.value, taskDate.value, isSaved.value)
+}
+
 </script>
 
 <template>
   <div
     class="todo-item-container"
-    v-if="isNotDeleted"
-    :class="{ modColor: isColorModified }"
+    :class="{ modColor: isSaved }"
   >
     <div class="todo-item-top">
       <UiInput
@@ -40,11 +40,10 @@ const modTask = () => {
         :maxlength="20"
         :model-value="taskName"
         @update:model-value="taskName = $event"
-        v-if="isEdited"
+        v-if="!isSaved"
       />
       <h2 class="todo-item-name" v-else>{{ taskName }}</h2>
-      <div>{{ idProp }}</div>
-      <UiButton @action="deleteTask" buttonType="DELETE">x</UiButton>
+      <UiButton class="task-button" button-type="DELETE" @action="deleteTask">x</UiButton>
     </div>
     <div class="todo-item-body">
       <textarea
@@ -52,10 +51,9 @@ const modTask = () => {
         class="todo-item-text-input"
         placeholder="description..."
         rows="10"
-        col="50"
         maxlength="200"
         v-model="taskText"
-        v-if="isEdited"
+        v-if="!isSaved"
       >
       </textarea>
       <p class="todo-item-text" v-else>{{ taskText }}</p>
@@ -65,13 +63,15 @@ const modTask = () => {
         type="date"
         name="taskDate"
         class="todo-item-date-input"
-        v-if="isEdited"
+        v-if="!isSaved"
         v-model="taskDate"
       />
       <div class="todo-item-date" v-else>{{ taskDate }}</div>
-      <TodoItemEditButton v-if="isColorModified" @mod-task="modTask" />
-      <TodoItemSaveButton v-if="isEdited && taskText" @mod-task="modTask" />
+      <UiButton class="task-button" v-if="isSaved" @action="modTask">edit</UiButton>
+      <UiButton class="task-button" v-if="!isSaved && taskText" @action="modTask">save</UiButton>
     </div>
+    <div style="color: red">{{ taskId }}</div>
+    <div>{{ todoItem }}</div>
   </div>
 </template>
 
@@ -79,7 +79,6 @@ const modTask = () => {
 .todo-item-container {
   min-width: 17rem;
   max-width: 18rem;
-  max-height: 20rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -133,29 +132,6 @@ const modTask = () => {
   border: var(--border-sub-container);
 }
 
-button {
-  cursor: pointer;
-  margin: 0;
-  border-radius: var(--main-radius);
-  font-size: 1rem;
-  padding: 0.2rem 0.5rem;
-  border: var(--border-button);
-  background-color: var(--main-color-lighter);
-  color: var(--main-color-text);
-  transition: 0.3s;
-}
-
-button:hover {
-  background-color: var(--main-color-darker);
-  border-color: var(--main-color-darker);
-}
-
-button:active {
-  background-color: var(--main-color-very-light);
-  border-color: var(--main-color-very-light);
-  color: var(--main-color-darker);
-}
-
 .todo-item-body {
   display: flex;
   border: var(--border-container);
@@ -196,7 +172,7 @@ button:active {
 }
 
 .todo-item-date-input {
-  padding: 0rem 0.5rem;
+  padding: 0 0.5rem;
   text-transform: uppercase;
   font-family: monospace;
   background-color: var(--main-color-lighter);
@@ -231,17 +207,17 @@ button:active {
   color: var(--main-color-text-mod);
   box-shadow: var(--main-shadow-mod);
 
-  button {
+  .task-button {
     background-color: var(--main-color-lighter-mod);
     color: var(--main-color-text-mod);
   }
 
-  button:hover {
+  .task-button:hover {
     background-color: var(--main-color-darker-mod);
     border-color: var(--main-color-darker-mod);
   }
 
-  button:active {
+  .task-button:active {
     background-color: var(--main-color-very-light-mod);
     border-color: var(--main-color-very-light-mod);
     color: var(--main-color-darker-mod);
