@@ -4,7 +4,7 @@ import TodoItem from "./components/TodoItem.vue";
 
 import { ref } from "vue";
 
-const count = ref(0);
+const taskCount = ref(0);
 const taskList = ref([]);
 const addTask = () => {
   taskList.value.push({
@@ -14,10 +14,12 @@ const addTask = () => {
     date: '',
     status: 'WAITING',
   })
+  taskCount.value++
 }
 
 const deleteTask = (taskId) => {
   taskList.value = taskList.value.filter((task) => task.id !== taskId)
+  taskCount.value--
   console.log(`DELETED TASK WITH ID === ${taskId}`)
 }
 
@@ -39,21 +41,25 @@ const modTask = (
 }
 const clearTaskList = () => {
   taskList.value = []
+  taskCount.value = 0
 }
 
 const changeColor = () => {
   const root = document.documentElement;
-  root.style.setProperty("--hue", Math.floor(Math.random() * 360));
+  root.style.setProperty("--hue", Math.floor(Math.random() * 360))
 };
 </script>
 
 <template>
   <div class="main-container">
     <div class="title-bar-container">
-      <h1>Todo List</h1>
+      <div class="title-container">
+        <div v-if="taskCount" class="counter-container">{{ taskCount }}</div>
+        <h1 class="title">tasks</h1>
+      </div>
       <div class="title-bar-buttons">
         <UiButton button-type="TITLE" @action="addTask">add</UiButton>
-        <UiButton button-type="TITLE" @action="clearTaskList">clear</UiButton>
+        <UiButton v-if="taskCount" button-type="TITLE" @action="clearTaskList">clear</UiButton>
         <UiButton button-type="TITLE" @action="changeColor">color</UiButton>
       </div>
     </div>
@@ -96,7 +102,16 @@ const changeColor = () => {
   background-color: var(--main-color-very-light-mod);
 }
 
-h1 {
+.title-container {
+  min-width: 8rem;
+  display: flex;
+  justify-content: space-evenly;
+  border: var(--border-container);
+}
+
+.title,
+.counter-container  {
+  font-size: 1.5rem;
   font-family: monospace;
   font-weight: bold;
   color: var(--main-color-darker);
@@ -104,8 +119,11 @@ h1 {
 }
 
 .title-bar-buttons {
+  min-width: 15rem;
   display: flex;
+  justify-content: space-between;
   gap: 1rem;
   border: var(--border-sub-container);
 }
+
 </style>

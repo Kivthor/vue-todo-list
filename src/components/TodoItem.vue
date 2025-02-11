@@ -72,7 +72,7 @@ const modTask = () => {
       <UiButton class="task-button" v-if="isSaved" @action="modTask">edit</UiButton>
       <UiButton class="task-button" v-if="!isSaved && taskText" @action="modTask">save</UiButton>
     </div>
-    <div style="color: red">{{ taskId }}</div>
+    <div>{{ taskId }}</div>
     <div>{{ todoItem }}</div>
   </div>
 </template>
@@ -182,7 +182,7 @@ const modTask = () => {
   color-scheme: dark;
   border: var(--border-button);
   border-radius: var(--main-radius);
-  transition: 0.2s;
+  transition: 0.1s;
 }
 
 .todo-item-date-input:hover {
